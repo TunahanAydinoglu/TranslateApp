@@ -1,2 +1,2 @@
 # TranslateApp
-Flutter Speech to Text &amp;&amp; Translator &amp;&amp; Text to Speech app
+An application that includes Speech to Text, Translate, Text to Speech operations
