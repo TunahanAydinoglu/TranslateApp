@@ -30,6 +30,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
   stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Butona bas ve konuşmaya başla...';
+  List<String> dizi = [""];
   double _confidence = 1.0;
 
   @override
@@ -62,9 +63,19 @@ class _SpeechScreenState extends State<SpeechScreen> {
         reverse: true,
         child: Container(
           padding: const EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 150.0),
-          child: Text(
-            _text,
-            style: TextStyle(fontSize: 16),
+          child: Column(
+            children: [
+              Text(
+                _text,
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Text(
+                dizi.last.toString(),style: TextStyle(color: Colors.red),
+              ) //diziye atıldığını görmek için
+            ],
           ),
         ),
       ),
@@ -82,6 +93,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
+            dizi.add(val.recognizedWords);
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
             }
