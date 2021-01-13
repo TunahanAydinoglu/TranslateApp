@@ -1,32 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:translator/translator.dart';
-
-void main() {
-  runApp(Translate());
-}
-
-class Translate extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Translator',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: TranslateScreen(),
-    );
-  }
-}
+import 'package:TranslateApp/text_to_speech.dart';
 
 class TranslateScreen extends StatefulWidget {
+  final String value;
+  final String veri;
+
+  TranslateScreen({Key key, this.value, this.veri}) : super(key: key);
+
   @override
-  _AppState createState() => _AppState();
+  _TranslateScreen createState() => new _TranslateScreen();
 }
 
-class _AppState extends State<TranslateScreen> {
+class _TranslateScreen extends State<TranslateScreen> {
   GoogleTranslator translator = new GoogleTranslator();
 
   String out;
@@ -42,55 +29,83 @@ class _AppState extends State<TranslateScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.value != "") {
+      lang.text = widget.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Translate"),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Wrap(
-              children: <Widget>[
-                SafeArea(
-                  child: Text(
-                    'Çevirmek istediğiniz metni giriniz ',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                TextField(
-                  controller: lang,
-                  style: TextStyle(fontSize: 20),
-                  autofocus: true,
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 35,
-                    ),
-                    RaisedButton(
-                      color: Colors.blueGrey,
-                      child: Text("Çevir"),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primarySwatch: Colors.red,
+          visualDensity: VisualDensity.adaptivePlatformDensity),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Text("Translate"),
+              SizedBox(
+                width: 170,
+              ),
+              (lang.text != "")
+                  ? RaisedButton(
+                      child: new Text("Veri gönder"),
                       onPressed: () {
-                        trans();
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TextToSpeechScreen(veri: out.toString())));
                       },
+                    )
+                  : SizedBox()
+            ],
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  SafeArea(
+                    child: Text(
+                      'Çevirmek istediğiniz metni giriniz ',
+                      style: TextStyle(fontSize: 22),
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 100,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: TextField(
+                      controller: lang,
+                      style: TextStyle(fontSize: 20),
                     ),
-                    Text(
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: RaisedButton(
+                          child: Text("Çevir"),
+                          onPressed: () {
+                            trans();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: Text(
                       (out != null) ? out.toString() : "",
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 24,
                       ),
                     ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

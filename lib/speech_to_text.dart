@@ -1,6 +1,8 @@
+// import 'package:TranslateApp/text_to_speech.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'translate.dart';
 
 void main() {
   runApp(SpeechToTextScreen());
@@ -43,8 +45,28 @@ class _SpeechScreenState extends State<SpeechScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            'Güvenirlik Oranı : ${(_confidence * 100.0).toStringAsFixed(1)}%'),
+        title: Row(
+          children: [
+            Text(
+                'Güvenirlik Oranı : ${(_confidence * 100.0).toStringAsFixed(1)}%'),
+            SizedBox(
+              width: 40,
+            ),
+            (dizi.length != 1)
+                ? RaisedButton(
+                    color: Colors.white,
+                    child: new Text("Veri gönder"),
+                    onPressed: () {
+                      var route = new MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            new TranslateScreen(value: dizi.last.toString()),
+                      );
+                      Navigator.of(context).push(route);
+                    },
+                  )
+                : SizedBox()
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
@@ -69,12 +91,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 _text,
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                dizi.last.toString(),style: TextStyle(color: Colors.red),
-              ) //diziye atıldığını görmek için
             ],
           ),
         ),

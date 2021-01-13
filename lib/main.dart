@@ -1,3 +1,4 @@
+import 'package:TranslateApp/translate.dart';
 import 'package:flutter/material.dart';
 import 'text_to_speech.dart';
 import 'speech_to_text.dart';
@@ -59,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Translator"),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Translate()));
+                    MaterialPageRoute(builder: (context) => TranslateScreen()));
               },
             ),
             RaisedButton(
