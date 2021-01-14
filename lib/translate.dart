@@ -55,7 +55,11 @@ class _TranslateScreen extends State<TranslateScreen> {
                   ? RaisedButton(
                       child: new Text("Veri gönder"),
                       onPressed: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TextToSpeechScreen(veri: out.toString())));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    TextToSpeechScreen(veri: out.toString())));
                       },
                     )
                   : SizedBox()
@@ -67,33 +71,34 @@ class _TranslateScreen extends State<TranslateScreen> {
             child: Container(
               child: Wrap(
                 children: <Widget>[
-                  SafeArea(
-                    child: Text(
-                      'Çevirmek istediğiniz metni giriniz ',
-                      style: TextStyle(fontSize: 22),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: SafeArea(
+                        child: Text(
+                          'Çevirmek istediğiniz metni giriniz ',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: TextField(
                       controller: lang,
                       style: TextStyle(fontSize: 20),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: RaisedButton(
-                          child: Text("Çevir"),
-                          onPressed: () {
-                            trans();
-                          },
-                        ),
-                      ),
-                    ],
+                  Center(
+                    child: RaisedButton(
+                      child: Text("Çevir"),
+                      onPressed: () {
+                        trans();
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30.0),

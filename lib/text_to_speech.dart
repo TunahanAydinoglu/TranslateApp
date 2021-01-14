@@ -44,29 +44,35 @@ class _TextToSpeechScreen extends State<TextToSpeechScreen> {
         body: Container(
           child: Wrap(
             children: <Widget>[
-              SafeArea(
-                child: Text(
-                  'Seslendirmek istediğiniz metni giriniz ',
-                  style: TextStyle(fontSize: 22),
-                ),
-              ),
-              TextFormField(
-                controller: textEditingController,
-                cursorColor: Colors.orange,
-                style: TextStyle(fontSize: 22),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: RaisedButton(
-                      child: Text("Butona bas ve girdiğin yazıyı sese çevir"),
-                      onPressed: () => _speak(textEditingController.text),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: SafeArea(
+                    child: Text(
+                      'Seslendirmek istediğiniz metni giriniz ',
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
-                ],
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextFormField(
+                  controller: textEditingController,
+                  cursorColor: Colors.orange,
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                    labelText: "Text to Speech",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              Center(
+                child: RaisedButton(
+                  child: Text("Butona bas ve girdiğin yazıyı sese çevir"),
+                  onPressed: () => _speak(textEditingController.text),
+                ),
               )
             ],
           ),
